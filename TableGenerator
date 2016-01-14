@@ -1,0 +1,127 @@
+''' Dimensionalize all variables '''
+'' FileSystemObject variables
+Dim ascFSO As New FileSystemObject
+Dim ascFolder As folder
+Dim ascFile As File
+
+'' Excel object variables
+Dim currBook As Workbook
+Dim rawSheet As Worksheet
+Dim tblSheet As Worksheet
+
+'' String variables
+Dim foldr As String
+Dim filname As String
+
+'' Numerical variables
+Dim LastRow As Long
+Dim counter As Long
+Dim topflag As Integer
+
+'' Indexing variables
+Dim i, j, k, c As Integer
+
+'' Other error-handler variables
+Dim check As Variant
+
+Sub ASCIItoTable()
+''' Initial Setup '''
+'' Turn off screenupdating to prevent flashy screen
+    Application.ScreenUpdating = False
+    
+'' Set Excel object variables to respective objects
+    Set currBook = ThisWorkbook
+    Set rawSheet = currBook.Worksheets(1) 'original ASCII data imported from tab-delimited file
+    Set tblSheet = currBook.Worksheets(2) 'location of final resulting table
+    
+'' Ask the user for the file path containing the ASCII text files
+    foldr = InputBox("Enter the path of the folder containing the ASCII data files: ")
+    
+'' Initialize filesystemobject as folder of given file path
+    Set ascFolder = ascFSO.GetFolder(foldr)
+    
+'' Initialize values for certain variables
+    j = 2 'row number index (first row is header)
+    c = 3 'column number index (first two are SampleName and SampleID)
+    
+    topflag = 1 'flag for checking if first row of sheet or not
+    
+''  Insert table header information including expected labels for HPLC results
+    tblSheet.Cells(1, 1) = "SampleName"
+    tblSheet.Cells(1, 2) = "SampleID"
+    
+    
+''' Raw Data Import '''
+'' Iterate through each file in the given folder
+'' (should only contain data files to be read)
+    For Each ascFile In ascFolder.Files
+
+        filname = ascFile.Name 'take only name of file; ascFile includes full path
+
+'' Use the given "directory" to open a tab-delimited text file in Excel and activate it
+        ChDir foldr
+        Workbooks.OpenText Filename:= _
+            ascFile, Origin:=437, DataType:=xlDelimited, TextQualifier:=xlDoubleQuote, Tab:=True, _
+            FieldInfo:=Array(1, 1), TrailingMinusNumbers:=True
+
+        Workbooks(filname).Activate
+
+'' If first file, copy and paste into the top of the raw data sheet
+'' otherwise, copy and paste two rows beneath the last data set
+        If topflag = 1 Then
+            ActiveWorkbook.ActiveSheet.UsedRange.Copy (rawSheet.Cells(1, 1))
+            topflag = 0
+        Else
+            ActiveWorkbook.ActiveSheet.UsedRange.Copy (rawSheet.Cells(rawSheet.UsedRange.Rows.Count + 2, 1))
+        End If
+
+        Workbooks(filname).Close 'close this file in preparation for the next one
+    
+    Next ascFile
+    
+    
+''' Producing the Table '''
+    LastRow = rawSheet.UsedRange.Rows.Count 'find how many rows were used
+    
+'' Go through every row to find different aspects of the final table
+    For i = 1 To LastRow
+        
+        If rawSheet.Cells(i, 1) = "Sample Name" Then 'if "Sample Name" is found...
+            tblSheet.Cells(j, 1) = rawSheet.Cells(i, 2) 'take the sample name
+            tblSheet.Cells(j, 2) = rawSheet.Cells(i + 1, 2) 'and the sample ID right beneath it
+        ElseIf rawSheet.Cells(i, 1) = "ID#" Then 'if "ID#" is found...
+            i = i + 1
+            counter = i
+            
+            Do Until IsEmpty(rawSheet.Cells(counter, 1)) 'count how many elutants there are
+                counter = counter + 1
+            Loop
+            
+'' Check to see if label of given elutant has already been listed in the table
+            For k = i To counter - 1
+                check = Application.Match(rawSheet.Cells(k, 2), tblSheet.Range("1:1"), 0)
+                If WorksheetFunction.IsError(check) = True Then 'if not...
+                    tblSheet.Cells(1, c) = rawSheet.Cells(k, 2) 'add new label to next available column
+                    tblSheet.Cells(j, c) = rawSheet.Cells(k, 6) 'add the value to new label's column
+                    c = c + 1 'prepare for next new label
+                Else
+                    tblSheet.Cells(j, check) = rawSheet.Cells(k, 6) 'if so, add the value to respective column
+                End If
+            Next k
+            
+            j = j + 1
+            i = k
+            
+        End If
+        
+    Next i
+    
+'' Format table header
+    tblSheet.Range(tblSheet.Cells(1, 1), tblSheet.Cells(1, c)).Font.Bold = True
+    tblSheet.Range(tblSheet.Cells(1, 1), tblSheet.Cells(1, c)).HorizontalAlignment = xlCenter
+    tblSheet.Range(tblSheet.Cells(1, 1), tblSheet.Cells(1, c)).Columns.AutoFit
+
+'' Turn screenupdating back on
+    Application.ScreenUpdating = True
+
+End Sub
