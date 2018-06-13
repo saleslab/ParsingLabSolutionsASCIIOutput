@@ -2,7 +2,7 @@
 
 Generates a table from LabSolutions HPLC ASCII data files
 
-In a blank Excel workbook, copy and paste "TableGenerator" into a new VBA module and save it. Make sure all of your LabSolutions ASCII data results files are saved in one folder. Make sure that no other files exist in the folder. Run the module, follow the prompts, and wait for it to complete. Look over final output table on second sheet to ensure accuracy. Adjust final results as necesary.
+In a blank Excel workbook, copy and paste "TableGenerator" into a new VBA module and save it. Make sure all of your LabSolutions ASCII data results files are saved in one folder. Make sure that no other files exist in the folder. Run the module, follow the prompts, and wait for it to complete. Look over final output table on second sheet to ensure accuracy. Adjust final results as necessary.
 
 *Notes
 
