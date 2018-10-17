@@ -22,8 +22,10 @@ Written by Tommy Thompson
 '''
 
 ### Initializations ###
+
 ## Libraries
 from os import listdir
+from pathlib import Path
 
 ## Key Labels
 str1 = "Sample Name"
@@ -43,14 +45,18 @@ concDict = {}
 sampNum = 0
 
 ## I/O Locations
-sourcePath = input("Enter the path of the folder containing the files: ")
-resultPath = input("Enter the path of where the output will be saved: ")
+sourceInput = input("Enter the path of the folder containing the files: ")
+resultInput = input("Enter the path of where the output will be saved: ")
+
+sourcePath = Path(sourceInput) #make the path OS-agnostic
+resultPath = Path(resultInput) / "results.txt" #append results file name to path
 
 ### Reading the Data ###
+
 ## File Loop
 # Read each file in folder given at path
 for ascFile in listdir(sourcePath):
-    path = sourcePath + "\\" + ascFile #append file name to complete path
+    path = sourcePath / ascFile #append file name to complete path
 
 # Open and read textfile
     with open(path, "r") as rawMat:
