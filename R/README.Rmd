@@ -1,9 +1,4 @@
----
-title: "Parsing LabSolutions ASCII Output with R"
-author: "Tyler Bradley"
-date: "October 17, 2018"
-output: html_document
----
+# Parsing LabSolutions ASCII Output with R
 
 This README shows a basic usage of `parse_hplc` function provided in the `R/parse-hplc.R` file in this repository. This function allows users to pass a file path to an output file to the function and it will retrieve the sample data from the .txt file. 
 
