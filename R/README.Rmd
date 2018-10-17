@@ -22,6 +22,21 @@ If we do not specify an output path, than by default a tibble will be returned t
 
 ```{r}
 parse_hplc("ExampleInput.txt")
+
+# # A tibble: 131 x 7
+#    sample_name     sample_id `Ca2+` `K+`    `Mg2+` `Na+`  `NH4+ -N`
+#    <chr>           <chr>     <chr>  <chr>   <chr>  <chr>  <chr>    
+#  1 singleinjection 1         0.000  0.000   0.000  0.000  0.000    
+#  2 singleinjection 2         0.000  0.000   0.000  0.000  0.000    
+#  3 singleinjection 3         0.000  0.000   0.000  0.000  0.000    
+#  4 Cation Std Set  1         0.000  0.000   0.000  0.000  0.000    
+#  5 Cation Std Set  2         0.000  0.626   0.000  0.103  0.156    
+#  6 Cation Std Set  3         1.250  12.512  1.251  2.056  3.125    
+#  7 Cation Std Set  4         2.500  24.999  2.503  4.124  6.233    
+#  8 Cation Std Set  5         4.977  49.924  4.996  8.209  12.482   
+#  9 Cation Std Set  6         10.005 99.902  10.019 15.972 24.933   
+# 10 Cation Std Set  7         19.997 200.244 20.043 32.410 50.041   
+# # ... with 121 more rows
 ```
 
 
