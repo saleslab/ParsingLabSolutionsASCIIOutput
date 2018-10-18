@@ -16,7 +16,7 @@ This script will take care of installing any required packages that you do not a
 If we do not specify an output path, than by default a tibble will be returned that can be used for further analysis. 
 
 ```{r}
-parse_hplc("ExampleInput.txt")
+parse_hplc("example-inputs/ExampleInput.txt")
 
 # # A tibble: 131 x 7
 #    sample_name     sample_id `Ca2+` `K+`    `Mg2+` `Na+`  `NH4+ -N`
@@ -38,7 +38,7 @@ parse_hplc("ExampleInput.txt")
 By default, only the data is returned from this function with one row representing one sample with all of the analyses given as columns. If you are returning the info to your R session (i.e. leaving `path = NULL` as it is by default) than you can also get the rest of the information for each sample returned by setting `output_type = "full"`. 
 
 ```{r, include=FALSE}
-parse_hplc("ExampleInput.txt", output_type = "full")
+parse_hplc("example-inputs/ExampleInput.txt", output_type = "full")
 
 ```
 
@@ -50,6 +50,6 @@ The raw output of this function can be a bit unwiedly, and it likely won't save 
 Finally, If you would like to simply save the file to a csv for use in excel, than you can just provide a path to the desired output.
 
 ```{r, include=FALSE}
-parse_hplc("ExampleInput.txt", path = "example-output.csv")
+parse_hplc("example-inputs/ExampleInput.txt", path = "example-outputs/example-output.csv")
 
 ```
