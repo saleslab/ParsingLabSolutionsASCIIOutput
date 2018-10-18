@@ -62,7 +62,7 @@ parse_hplc <- function(input, path = NULL, output_type = c("data", "full")){
     )
     
     output <- purrr::discard(find_name, is.na) %>% 
-      paste(collapse = "-")
+      paste(collapse = "---")
   })
   
   
@@ -114,7 +114,7 @@ parse_hplc <- function(input, path = NULL, output_type = c("data", "full")){
   
   
   data_output <- purrr::imap_dfr(sample_list, ~{
-    sample_info <- stringr::str_split(.y, "-") %>% purrr::flatten_chr()
+    sample_info <- stringr::str_split(.y, "---") %>% purrr::flatten_chr()
     
     sample_data <- purrr::discard(.x, function(z){!"data.frame" %in% class(z)})
     
