@@ -15,7 +15,7 @@ javits_anion
 # # A tibble: 55 x 7
 # sample_name sample_id `Cl-`  `NO2- -N` `NO3- -N` `PO43-` `SO42-`
 # <chr>       <chr>     <chr>  <chr>     <chr>     <chr>   <chr>  
-#   1 anion std   1         0.000  0.000     0.000     0.000   0.000  
+# 1 anion std   1         0.000  0.000     0.000     0.000   0.000  
 # 2 anion std   2         0.198  0.000     0.078     0.000   0.078  
 # 3 anion std   3         0.396  0.000     0.156     0.000   0.156  
 # 4 anion std   4         0.780  0.313     0.306     0.000   0.295  
@@ -40,7 +40,7 @@ javits_cations
 # # A tibble: 55 x 7
 # sample_name     sample_id `Ca2+` `K+`   `Mg2+` `Na+`  NH4N  
 # <chr>           <chr>     <chr>  <chr>  <chr>  <chr>  <chr> 
-#   1 Cation Standard 001       0.000  0.000  0.000  0.000  0.000 
+# 1 Cation Standard 001       0.000  0.000  0.000  0.000  0.000 
 # 2 Cation Standard 002       0.156  0.000  0.000  0.128  0.078 
 # 3 Cation Standard 003       0.313  0.156  0.156  0.257  0.156 
 # 4 Cation Standard 004       0.608  0.313  0.313  0.488  0.318 
