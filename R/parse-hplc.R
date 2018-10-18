@@ -5,12 +5,15 @@
 # 2018-10-17
 #===============================================================================
 
-req_pckg <- c("readr", "purrr", "stringr", "dplyr", "tidyr", "tibble")
+req_pckg <- c("readr", "purrr", "stringr", "dplyr", "tidyr", "tibble", "magrittr")
 
 if (any(!req_pckg %in% installed.packages())){
   missing_pckg <- req_pckg[!req_pckg %in% installed.packages()]
   install.packages(missing_pckg)
 }
+
+# while this is a sourced script, we have to load magrittr for %>% 
+library(magrittr)
 
 
 #' Parse output files from LabSoltions HPLC ASCII
