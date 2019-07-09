@@ -5,12 +5,13 @@ suppressWarnings({
   })
 })
 
-source("R/parse-hplc.R")
+source("parse-hplc.R")
 
 
 ui <- fluidPage(
   fluidRow(
     div(
+      h2("HPLC Data Parser"),
       fileInput(
         inputId = "file_upload",
         label = "Select File:"
