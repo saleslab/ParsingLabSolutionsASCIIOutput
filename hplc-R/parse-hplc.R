@@ -44,12 +44,17 @@ library(magrittr)
 #' run. 
 parse_hplc <- function(input, path = NULL, output_type = c("data", "full")){
   
+  # read in the text files and create vector with each element representing a line
   input_file <- readr::read_lines(input) %>% purrr::discard(~{.x == ""})
   
+  # find the lines that are marked "Header" to identify the start of a new sample
   sample_breaks <- which(input_file == "[Header]")
   
+  # split the vector into a list of vectors with each element of the top list representing
+  # a sample
   sample_list_raw <- split(input_file, cumsum(seq_along(input_file) %in% sample_breaks))
   
+  # this loop circles through the vectors and extracts the sample name from each 
   sample_names <- purrr::map_chr(sample_list_raw, ~{
     find_name <- purrr::map_chr(
       .x, function(y){
@@ -65,10 +70,13 @@ parse_hplc <- function(input, path = NULL, output_type = c("data", "full")){
       paste(collapse = "---")
   })
   
-  
+  # assign sample name to each element of the top most list
   names(sample_list_raw) <- sample_names
   
   
+  # this iteration over the top most list breaks each individual sub vector into 
+  # a list of vectors. It then takes each of those sub-sub vectors and creates a
+  # named object or a tibble (for the sample data)
   sample_list <- purrr::map(
     sample_list_raw, function(x){
       list_breaks <- which(stringr::str_detect(x, "\\["))
@@ -112,7 +120,8 @@ parse_hplc <- function(input, path = NULL, output_type = c("data", "full")){
     }
   )
   
-  
+  # This chunk creates a final output tibble with all of the relevant data
+  # for each of the samples including sample name, sample id, and parameter values
   data_output <- purrr::imap_dfr(sample_list, ~{
     sample_info <- stringr::str_split(.y, "---") %>% purrr::flatten_chr()
     
@@ -138,6 +147,7 @@ parse_hplc <- function(input, path = NULL, output_type = c("data", "full")){
   })
   
   
+  # this section handles how the data is output
   if (!is.null(path)) {
     output_type <- "data"
     

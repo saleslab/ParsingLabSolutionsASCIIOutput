@@ -1,0 +1,13 @@
+name: hplc-output-parser
+title: hplc-output-parser
+username:
+account: tbradley
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 1017736
+bundleId: 2212843
+url: https://tbradley.shinyapps.io/hplc-output-parser/
+when: 1562634108.80614
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: parse-output-script.R|README.Rmd|test-example-files.R|example-inputs/ExampleInput.txt|example-inputs/Javits_Anion_Set2.txt|example-inputs/Javits_Cation_Set2.txt|example-outputs/example-output.csv|example-outputs/javits-anion-ex.csv|example-outputs/javits-cations-ex.csv|www/full-report-output-tree.png
